@@ -25,8 +25,14 @@ class Model3dRepository {
     return await newModel.save();
   }
 
-  async delete(id: string) {
+  async deleteById(id: string) {
     return await this.db.Models3d.deleteOne({ _id: id });
-}
+  }
+
+  async update(id: string, model3d: IModel3d): Promise<IModel3d | null> {
+    return await this.db.Models3d.findByIdAndUpdate(id, model3d, {
+      new: true,
+    }).exec();
+  }
 }
 export default Model3dRepository;

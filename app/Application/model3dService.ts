@@ -20,6 +20,15 @@ class Model3dService {
   async getById(id: string) {
     return await this.model3dRepository.getById(id);
   }
+
+  async updateModel(id: string, model3dData: IModel3d) {
+    const updatedModel = await this.model3dRepository.update(id, model3dData);
+    return updatedModel;
+  }
+
+  async deleteById(id: string) {
+    return await this.model3dRepository.deleteById(id);
+  }
 }
 
 export default Model3dService;

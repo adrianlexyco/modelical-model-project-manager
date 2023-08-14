@@ -1,10 +1,7 @@
 import express, { Application, Request, Response, NextFunction } from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
-import Model3dService from "./Application/model3dService";
-import Model3dController from "./Adapters/Model3dController";
-import Model3dRepository from "./Infrastructure/Model3DRepository";
-import Model3d, { IModel3d } from "./Infrastructure/models/model3dSchema";
+import model3dRoutes from "./Adapters/model3dRoutes";
 
 require("dotenv").config();
 
@@ -29,42 +26,7 @@ async function connectToDatabase() {
 async function startServer() {
   await connectToDatabase();
 
-  const model3Repository = new Model3dRepository({
-    Models3d: Model3d,
-  });
-  const model3Service = new Model3dService(model3Repository);
-  const model3Controller = new Model3dController(model3Service);
-
-  app.get("/", (req: Request, res: Response, next: NextFunction) => {
-    res.json({ message: "Hello, TypeScript Express App!" });
-  });
-
-  app.get(
-    "/models",
-    async (req: Request, res: Response, next: NextFunction) => {
-      return await model3Controller.getAllModels(req, res);
-    }
-  );
-
-  app.get(
-    "/models/:id",
-    async (req: Request, res: Response, next: NextFunction) => {
-      return await model3Controller.getModelById(req, res);
-    }
-  );
-
-  app.get(
-    "/models2",
-    async (req: Request, res: Response, next: NextFunction) => {
-      const hardcodedModel = {
-        name: "example3dModel",
-        description: "This is an example model",
-        projectId: "asdf",
-      };
-      req.body = hardcodedModel;
-      return await model3Controller.createModel(req, res);
-    }
-  );
+  app.use("/models", model3dRoutes);
 
   const port: number = Number(process.env.PORT);
   app.listen(port, () => {

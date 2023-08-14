@@ -1,4 +1,4 @@
-class Model3d {
+export class Model3d {
   name: string;
   description: string;
   projectId: string;
@@ -13,5 +13,3 @@ class Model3d {
     this.projectId = projectId;
   }
 }
-
-export default Model3d;
