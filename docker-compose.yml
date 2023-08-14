@@ -1,0 +1,36 @@
+version: "1"
+
+networks:
+  app-network:
+
+services:
+  api:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: npx ts-node app/app.ts
+    ports:
+      - 3001:3001
+    volumes:
+      - .:/app
+    depends_on:
+      - db_mongo
+    networks:
+      - app-network
+  db_mongo:
+    container_name: db_mongo
+    image: mongo:latest
+    volumes:
+      - shared_data:/data/db
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: "testing_db"
+      MONGO_INITDB_ROOT_USERNAME: "testing_db"
+      MONGO_INITDB_ROOT_PASSWORD: "testing_db"
+    networks:
+      - app-network
+
+volumes:
+  shared_data:
