@@ -1,3 +1,4 @@
+const { Model3d } = require("../../app/Domain/model3d");
 const {
   Model3dRepository,
 } = require("../../app/Infrastructure/Model3dRepository");
@@ -25,17 +26,17 @@ describe("Model3dRepository", () => {
   });
 
   test("getAll", async () => {
-    const mockData = [{ _id: "1" }, { _id: "2" }];
+    const mockData = [new Model3d(),new Model3d()];
     mockDb.Models3d.find.mockResolvedValueOnce(mockData);
 
     const result = await model3dRepository.getAll();
-
+    console.log(result);
     expect(mockDb.Models3d.find).toHaveBeenCalled();
     expect(result).toEqual(mockData);
   });
 
   test("getById", async () => {
-    const mockData = { _id: "1" };
+    const mockData = new Model3d();
     mockDb.Models3d.findById.mockResolvedValueOnce(mockData);
 
     const result = await model3dRepository.getById("1");
@@ -45,7 +46,7 @@ describe("Model3dRepository", () => {
   });
 
   test("create", async () => {
-    const mockData = { _id: "3" };
+    const mockData = new Model3d();
     const mockNewModel = {
       ...mockData,
       save: jest.fn().mockResolvedValueOnce(mockData),
@@ -68,7 +69,7 @@ describe("Model3dRepository", () => {
   });
 
   test("update", async () => {
-    const mockData = { _id: "1", name: "new name" };
+    const mockData = new Model3d(undefined, "new name", undefined, undefined);
     mockDb.Models3d.findByIdAndUpdate.mockResolvedValueOnce(mockData);
 
     const result = await model3dRepository.update("1", { name: "new name" });
