@@ -1,7 +1,8 @@
 import express, { Application, Request, Response, NextFunction } from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
-import model3dRoutes from "./Adapters/model3dRoutes";
+import model3dRoutes from "./Adapters/routes/model3dRoutes";
+import projectRoutes from './Adapters/routes/projectRoutes'
 
 require("dotenv").config();
 
@@ -27,6 +28,7 @@ async function startServer() {
   await connectToDatabase();
 
   app.use("/models", model3dRoutes);
+  app.use("/project", projectRoutes);
 
   const port: number = Number(process.env.PORT);
   app.listen(port, () => {

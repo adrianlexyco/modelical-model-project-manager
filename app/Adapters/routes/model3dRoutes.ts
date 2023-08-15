@@ -3,6 +3,7 @@ import { Model3dController } from "./Model3dController";
 import { Model3dService } from "../Application/model3dService";
 import { Model3dRepository } from "../Infrastructure/Model3DRepository";
 import Model3d from "../Infrastructure/models/model3dSchema";
+//USAR AQUI EL MODEL3D DEL DOMINIO
 
 const router = express.Router();
 
