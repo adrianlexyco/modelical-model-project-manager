@@ -1,5 +1,5 @@
+import { Model3d } from "../Domain/model3d";
 import { Model3dRepository } from "../Infrastructure/Model3DRepository";
-import { IModel3d } from "../Infrastructure/models/model3dSchema";
 
 class Model3dService {
   model3dRepository: Model3dRepository;
@@ -12,7 +12,7 @@ class Model3dService {
     return await this.model3dRepository.getAll();
   }
 
-  async createModel(model3dData: IModel3d) {
+  async createModel(model3dData: Model3d) {
     const newModel = await this.model3dRepository.create(model3dData);
     return newModel;
   }
@@ -21,7 +21,7 @@ class Model3dService {
     return await this.model3dRepository.getById(id);
   }
 
-  async updateModel(id: string, model3dData: IModel3d) {
+  async updateModel(id: string, model3dData: Model3d) {
     const updatedModel = await this.model3dRepository.update(id, model3dData);
     return updatedModel;
   }

@@ -4,8 +4,6 @@ import Model3d from "../../Infrastructure/models/model3dSchema";
 import { Model3dService } from "../../Application/model3dService";
 import { Model3dController } from "../Model3dController";
 
-//USAR AQUI EL MODEL3D DEL DOMINIO
-
 const router = express.Router();
 
 const model3Repository = new Model3dRepository({

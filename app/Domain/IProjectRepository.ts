@@ -1,3 +1,5 @@
+import Project from "./project";
+
 export interface IProjectRepository {
   getAll(): Promise<Project[]>;
   getById(id: string): Promise<Project | null>;

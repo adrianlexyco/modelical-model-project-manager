@@ -94,18 +94,23 @@ class ProjectController {
     }
   }
 
-    async addModelToProject(req: Request, res: Response) {
-      const projectId = req.params.id;
+  async addModelToProject(req: Request, res: Response) {
+    const projectId = req.params.id;
 
-      try {
-        const project = await this.ProjectService.getById(projectId);
-        if (project) {
-          const newModelData = req.body;
-          const newModel = await this.model3dService.createModel(newModelData);
-
+    try {
+      const project = await this.ProjectService.getById(projectId);
+      if (project) {
+        const newModelData = req.body;
+        const newModel = await this.model3dService.createModel(newModelData);
+        console.log(newModel);
+        if (newModel.id) {
           const newModelList = [...project.modelList, newModel.id];
 
-          const newProject = {name: project.name, description: project.description, modelList: newModelList};
+          const newProject = {
+            name: project.name,
+            description: project.description,
+            modelList: newModelList,
+          };
 
           const updatedProject = await this.ProjectService.updateProject(
             projectId,
@@ -114,12 +119,15 @@ class ProjectController {
 
           res.status(200).send(newModel);
         } else {
-          res.status(404).send({ message: "Project not found" });
+          res.status(422).send({ message: "Model not created" });
         }
-      } catch (error) {
-        res.status(500).send({ message: "Internal server error" });
+      } else {
+        res.status(404).send({ message: "Project not found" });
       }
+    } catch (error) {
+      res.status(500).send({ message: "Internal server error" });
     }
+  }
 }
 
 export { ProjectController };

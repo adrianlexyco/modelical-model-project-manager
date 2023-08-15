@@ -55,13 +55,9 @@ class Model3dController {
   async deleteModel(req: Request, res: Response) {
     const id = req.params.id;
     try {
-      const deletedModel = await this.model3dService.deleteById(id);
+      await this.model3dService.deleteById(id);
 
-      if (deletedModel) {
-        res.status(200).send({ message: "Model successfully deleted" });
-      } else {
-        res.status(404).send({ message: "Model not found" });
-      }
+      res.status(200).send({ message: "Model successfully deleted" });
     } catch (error) {
       res.status(404).send({ message: error });
     }
