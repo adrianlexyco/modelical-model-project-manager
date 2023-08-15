@@ -1,5 +1,5 @@
 class Project {
-  id: string;
+  id?: string;
   name: string;
   description: string;
   modelList: string[];
@@ -16,3 +16,5 @@ class Project {
     this.modelList = modelList;
   }
 }
+
+export default Project;

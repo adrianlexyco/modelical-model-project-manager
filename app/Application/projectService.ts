@@ -1,5 +1,5 @@
 import { ProjectRepository } from "../Infrastructure/projectRepository";
-import { IProject } from "../Infrastructure/models/projectSchema";
+import Project from "../Domain/project";
 
 class ProjectService {
   ProjectRepository: ProjectRepository;
@@ -16,12 +16,12 @@ class ProjectService {
     return await this.ProjectRepository.getById(id);
   }
 
-  async createProject(ProjectData: IProject) {
+  async createProject(ProjectData: Project) {
     const newModel = await this.ProjectRepository.create(ProjectData);
     return newModel;
   } 
 
-  async updateProject(id: string, ProjectData: IProject) {
+  async updateProject(id: string, ProjectData: Project) {
     const updatedModel = await this.ProjectRepository.update(id, ProjectData);
     return updatedModel;
   }
