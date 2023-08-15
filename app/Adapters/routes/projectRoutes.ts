@@ -1,24 +1,26 @@
 import express, { Request, Response } from "express";
-import { ProjectController } from "../ProjectController";
-import { ProjectService } from "../../Application/projectService";
 import { ProjectRepository } from "../../Infrastructure/projectRepository";
-import Project from "../../Infrastructure/models/projectSchema";
 import { Model3dRepository } from "../../Infrastructure/Model3DRepository";
-import Model3d from "../../Infrastructure/models/model3dSchema";
+import { ProjectService } from "../../Application/projectService";
 import { Model3dService } from "../../Application/model3dService";
+import { ProjectController } from "../ProjectController";
+import Model3d from "../../Infrastructure/models/model3dSchema";
+import Project from "../../Infrastructure/models/projectSchema";
 
 const router = express.Router();
-
-const model3Repository = new Model3dRepository({
-  Models3d: Model3d,
-});
-const model3Service = new Model3dService(model3Repository);
 
 const projectRepository = new ProjectRepository({
   Projects: Project,
 });
+
+const model3dRepository = new Model3dRepository({
+  Models3d: Model3d,
+});
+
 const projectService = new ProjectService(projectRepository);
-const projectController = new ProjectController(projectService, model3Service);
+const model3dService = new Model3dService(model3dRepository);
+
+const projectController = new ProjectController(projectService, model3dService);
 
 router.get("/", async (req: Request, res: Response) => {
   await projectController.getAllProjects(req, res);
@@ -42,6 +44,10 @@ router.delete("/:id", async (req: Request, res: Response) => {
 
 router.get("/:id/models", async (req: Request, res: Response) => {
   await projectController.getProjectModels(req, res);
+});
+
+router.put("/:id/addModel", async (req: Request, res: Response) => {
+  await projectController.addModelToProject(req, res);
 });
 
 export default router;

@@ -59,13 +59,8 @@ class ProjectController {
   async deleteProject(req: Request, res: Response) {
     const id = req.params.id;
     try {
-      const deletedProject = await this.ProjectService.deleteById(id);
-
-      if (deletedProject) {
-        res.status(200).send({ message: "Project successfully deleted" });
-      } else {
-        res.status(404).send({ message: "Project not found" });
-      }
+      await this.ProjectService.deleteById(id);
+      res.status(200).send({ message: "Project successfully deleted" });
     } catch (error) {
       res.status(404).send({ message: error });
     }
@@ -99,31 +94,32 @@ class ProjectController {
     }
   }
 
-//   async addModelToProject(req: Request, res: Response) {
-//     const projectId = req.params.id;
+    async addModelToProject(req: Request, res: Response) {
+      const projectId = req.params.id;
 
-//     try {
-//       const project = await this.ProjectService.getById(projectId);
-//       if (project) {
-//         const newModelData = req.body;
-//         const newModel = await this.model3dService.createModel(newModelData);
+      try {
+        const project = await this.ProjectService.getById(projectId);
+        if (project) {
+          const newModelData = req.body;
+          const newModel = await this.model3dService.createModel(newModelData);
 
-//         const newModelList = [...project.modelList, newModel.id];
+          const newModelList = [...project.modelList, newModel.id];
 
-//         const newProject = {name: project.name, description: project.description, modelList: ['asdf', 'basdf']};
-//         const updatedProject = await this.ProjectService.updateProject(
-//           projectId,
-//           newProject
-//         );
-       
-//         res.status(200).send(newModel);
-//       } else {
-//         res.status(404).send({ message: "Project not found" });
-//       }
-//     } catch (error) {
-//       res.status(500).send({ message: "Internal server error" });
-//     }
-//   }
-// }
+          const newProject = {name: project.name, description: project.description, modelList: newModelList};
+
+          const updatedProject = await this.ProjectService.updateProject(
+            projectId,
+            newProject
+          );
+
+          res.status(200).send(newModel);
+        } else {
+          res.status(404).send({ message: "Project not found" });
+        }
+      } catch (error) {
+        res.status(500).send({ message: "Internal server error" });
+      }
+    }
+}
 
 export { ProjectController };
