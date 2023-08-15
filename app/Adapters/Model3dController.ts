@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Model3dService from "../Application/model3dService";
+import { Model3dService } from "../Application/model3dService";
 
 class Model3dController {
   model3dService: Model3dService;
@@ -68,4 +68,4 @@ class Model3dController {
   }
 }
 
-export default Model3dController;
+export { Model3dController };

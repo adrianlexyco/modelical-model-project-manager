@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
 import { IModel3d } from "./models/model3dSchema";
 
-export interface IDatabase {
+export interface IDatabaseModel3d {
   Models3d: mongoose.Model<IModel3d>;
 }
 
 class Model3dRepository {
-  db: IDatabase;
+  db: IDatabaseModel3d;
 
-  constructor(database: IDatabase) {
+  constructor(database: IDatabaseModel3d) {
     this.db = database;
   }
 
@@ -17,7 +17,7 @@ class Model3dRepository {
   }
 
   async getById(id: string): Promise<IModel3d | null> {
-    return await this.db.Models3d.findById(id).exec();
+    return await this.db.Models3d.findById(id);
   }
 
   async create(model3d: IModel3d): Promise<IModel3d> {
@@ -32,7 +32,7 @@ class Model3dRepository {
   async update(id: string, model3d: IModel3d): Promise<IModel3d | null> {
     return await this.db.Models3d.findByIdAndUpdate(id, model3d, {
       new: true,
-    }).exec();
+    });
   }
 }
-export default Model3dRepository;
+export { Model3dRepository };

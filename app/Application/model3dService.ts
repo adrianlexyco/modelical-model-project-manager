@@ -1,4 +1,4 @@
-import Model3dRepository from "../Infrastructure/Model3DRepository";
+import { Model3dRepository } from "../Infrastructure/Model3DRepository";
 import { IModel3d } from "../Infrastructure/models/model3dSchema";
 
 class Model3dService {
@@ -31,4 +31,4 @@ class Model3dService {
   }
 }
 
-export default Model3dService;
+export { Model3dService };
