@@ -1,4 +1,3 @@
-const { Response, Request } = require("express");
 const { Model3dController } = require("../../app/Adapters/Model3dController");
 
 const { Model3dService } = require("../../app/Application/model3dService");
