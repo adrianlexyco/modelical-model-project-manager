@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { IProject } from "./models/projectSchema";
 import { IProjectRepository } from "../Domain/IProjectRepository";
 
-import Project from "../Domain/project";
+import {Project} from "../Domain/project";
 
 export interface IDatabaseProject {
   Projects: mongoose.Model<IProject>;
@@ -51,7 +51,7 @@ class ProjectRepository implements IProjectRepository {
     const projectToDelete = await this.db.Projects.findById(id);
 
     if (projectToDelete) {
-      this.db.Projects.deleteOne({ _id: id });
+      await this.db.Projects.deleteOne({ _id: id });
     }
   }
 }

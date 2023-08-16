@@ -1,4 +1,4 @@
-class Project {
+export class Project {
   id?: string;
   name: string;
   description: string;
@@ -16,5 +16,3 @@ class Project {
     this.modelList = modelList;
   }
 }
-
-export default Project;

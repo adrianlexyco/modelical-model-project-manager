@@ -1,5 +1,5 @@
 import { ProjectRepository } from "../Infrastructure/projectRepository";
-import Project from "../Domain/project";
+import { Project } from "../Domain/project";
 
 class ProjectService {
   ProjectRepository: ProjectRepository;
@@ -19,7 +19,7 @@ class ProjectService {
   async createProject(ProjectData: Project) {
     const newModel = await this.ProjectRepository.create(ProjectData);
     return newModel;
-  } 
+  }
 
   async updateProject(id: string, ProjectData: Project) {
     const updatedModel = await this.ProjectRepository.update(id, ProjectData);

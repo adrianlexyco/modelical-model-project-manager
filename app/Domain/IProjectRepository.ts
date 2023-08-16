@@ -1,4 +1,4 @@
-import Project from "./project";
+import {Project} from "./project";
 
 export interface IProjectRepository {
   getAll(): Promise<Project[]>;
